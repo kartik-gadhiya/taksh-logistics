@@ -143,8 +143,8 @@ git config --global --add safe.directory "${PROJECT_ROOT}" 2>/dev/null || true
 echo ""
 echo "[1/4] Fetching latest changes from origin/${TARGET_BRANCH}..."
 git fetch origin "${TARGET_BRANCH}"
-git checkout "${TARGET_BRANCH}"
-git pull origin "${TARGET_BRANCH}"
+git checkout "${TARGET_BRANCH}" 2>/dev/null || git checkout -b "${TARGET_BRANCH}" "origin/${TARGET_BRANCH}"
+git reset --hard "origin/${TARGET_BRANCH}"
 
 CURRENT_COMMIT="$(git rev-parse --short HEAD)"
 echo "Current commit: ${CURRENT_COMMIT}"
