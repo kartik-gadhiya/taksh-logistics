@@ -1,0 +1,39 @@
+name: Deploy to Server on Push to Main
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: production-deployment
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Execute Production Deployment
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger Remote Deployment via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST || secrets.HOST }}
+          username: ${{ secrets.SERVER_USER || secrets.USERNAME }}
+          key: ${{ secrets.SERVER_SSH_KEY || secrets.SSH_KEY || secrets.SSH_PRIVATE_KEY }}
+          password: ${{ secrets.SERVER_PASSWORD || secrets.SSH_PASSWORD }}
+          port: ${{ secrets.SERVER_PORT || secrets.PORT || '22' }}
+          script_stop: true
+          script: |
+            set -e
+            TARGET_DIR="/var/www/taksh-logistics"
+            echo "Deploying to ${TARGET_DIR}..."
+            cd "${TARGET_DIR}"
+            git config --global --add safe.directory "${TARGET_DIR}" 2>/dev/null || true
+            chmod +x scripts/deploy.sh
+            ./scripts/deploy.sh main
+            echo "Deployment completed successfully."
