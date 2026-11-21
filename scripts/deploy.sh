@@ -92,6 +92,9 @@ send_notification() {
     fi
 
     node "${SCRIPT_DIR}/send-deployment-email.mjs" \
+        --repo="kartik-gadhiya/taksh-logistics" \
+        --domain="endessustransport.com" \
+        --project="Endessus Transport (Frontend)" \
         --status="${status}" \
         --branch="${TARGET_BRANCH}" \
         --commit="${commit_hash}" \
