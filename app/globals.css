@@ -1,0 +1,320 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-outfit: var(--font-outfit), sans-serif;
+  
+  --color-blue-50: #fef2f2;
+  --color-blue-100: #ffe1e1;
+  --color-blue-200: #fecaca;
+  --color-blue-300: #fca5a5;
+  --color-blue-400: #f87171;
+  --color-blue-500: #ef4444;
+  --color-blue-600: #dc2626;
+  --color-blue-700: #b91c1c;
+  --color-blue-800: #991b1b;
+  --color-blue-900: #7f1d1d;
+  --color-blue-950: #450a0a;
+
+  --color-red-50: #fef2f2;
+  --color-red-100: #ffe1e1;
+  --color-red-200: #fecaca;
+  --color-red-300: #fca5a5;
+  --color-red-400: #f87171;
+  --color-red-500: #ef4444;
+  --color-red-600: #dc2626;
+  --color-red-700: #b91c1c;
+  --color-red-800: #991b1b;
+  --color-red-900: #7f1d1d;
+  --color-red-950: #450a0a;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #020617;
+  --card: #ffffff;
+  --card-foreground: #020617;
+  --popover: #ffffff;
+  --popover-foreground: #020617;
+  --primary: #dc2626;
+  --primary-foreground: #ffffff;
+  --secondary: #f1f5f9;
+  --secondary-foreground: #0f172a;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #f1f5f9;
+  --accent-foreground: #0f172a;
+  --destructive: #ef4444;
+  --destructive-foreground: #f8fafc;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #dc2626;
+  --radius: 1rem;
+}
+
+.dark {
+  --background: #020617;
+  --foreground: #f8fafc;
+  --card: #020617;
+  --card-foreground: #f8fafc;
+  --popover: #020617;
+  --popover-foreground: #f8fafc;
+  --primary: #ef4444;
+  --primary-foreground: #ffffff;
+  --secondary: #1e293b;
+  --secondary-foreground: #f8fafc;
+  --muted: #1e293b;
+  --muted-foreground: #94a3b8;
+  --accent: #1e293b;
+  --accent-foreground: #f8fafc;
+  --destructive: #7f1d1d;
+  --destructive-foreground: #f8fafc;
+  --border: #1e293b;
+  --input: #1e293b;
+  --ring: #dc2626;
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
+  }
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-feature-settings: "rlig" 1, "calt" 1;
+    scroll-behavior: smooth;
+  }
+}
+
+/* Custom Utilities */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark .glass {
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+::selection {
+  background: #2563eb;
+  color: white;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-foreground);
+}
+
+/* ── Accessibility Panel ──────────────────────────────── */
+html {
+  transition: font-size 0.3s ease;
+}
+
+/* Pause Animations — cuts all motion to 0 */
+[data-no-motion="true"] *,
+[data-no-motion="true"] *::before,
+[data-no-motion="true"] *::after {
+  animation-duration: 0ms !important;
+  animation-delay: 0ms !important;
+  transition-duration: 0ms !important;
+  transition-delay: 0ms !important;
+}
+
+/* Compact Mode — tighter section spacing */
+[data-compact="true"] section {
+  padding-top: 2.5rem !important;
+  padding-bottom: 2.5rem !important;
+}
+[data-compact="true"] .container {
+  gap: 1.5rem !important;
+}
+
+/* Dyslexia Font — high readability typeface */
+[data-dyslexia="true"] body,
+[data-dyslexia="true"] p,
+[data-dyslexia="true"] span,
+[data-dyslexia="true"] li,
+[data-dyslexia="true"] a,
+[data-dyslexia="true"] button {
+  font-family: Verdana, Geneva, Tahoma, sans-serif !important;
+  letter-spacing: 0.04em !important;
+  word-spacing: 0.12em !important;
+  line-height: 1.8 !important;
+}
+
+/* ──────────────────────────────────────────────
+   Premium Animation Keyframes
+──────────────────────────────────────────────── */
+
+/* Floating up-down */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33%       { transform: translateY(-12px) rotate(0.5deg); }
+  66%       { transform: translateY(-6px) rotate(-0.5deg); }
+}
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* SVG circle pulse (for map hub markers) */
+@keyframes svgPulse {
+  0%   { opacity: 0.6; }
+  100% { opacity: 0; transform: scale(1.8); }
+}
+
+/* Shimmer sweep */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.animate-shimmer {
+  background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.55) 50%, transparent 60%);
+  background-size: 200% 100%;
+  animation: shimmer 2.5s linear infinite;
+}
+
+/* Pulsing glow */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 8px rgba(37,99,235,0.3), 0 0 20px rgba(37,99,235,0.1); }
+  50%       { box-shadow: 0 0 20px rgba(37,99,235,0.7), 0 0 40px rgba(37,99,235,0.3); }
+}
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+/* Gradient border orbit */
+@keyframes gradient-border {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.animate-gradient-border {
+  background: linear-gradient(270deg, #2563eb, #818cf8, #06b6d4, #2563eb);
+  background-size: 400% 400%;
+  animation: gradient-border 4s ease infinite;
+}
+
+/* Slide-up reveal */
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-slide-up {
+  animation: slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Grain/noise texture overlay */
+.noise-overlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.03;
+  border-radius: inherit;
+}
+
+/* Glowing card border */
+.glow-card {
+  position: relative;
+}
+.glow-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(37,99,235,0.3), rgba(129,140,248,0.1), rgba(37,99,235,0.3));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+.glow-card:hover::before {
+  opacity: 1;
+}
+
+/* Section separator wave */
+.wave-separator {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+.wave-separator svg {
+  display: block;
+  width: 100%;
+}
+
+/* ── Hero Section – Road & Truck ──────────────────── */
+@keyframes roadDash {
+  from { stroke-dashoffset: 0; }
+  to   { stroke-dashoffset: -60; }
+}
+
+@keyframes truckSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes truckGlow {
+  0%, 100% { filter: drop-shadow(0 8px 24px rgba(249,115,22,0.15)); }
+  50%       { filter: drop-shadow(0 12px 40px rgba(249,115,22,0.35)); }
+}
+
+@keyframes containerSwap {
+  0%   { opacity: 0; transform: translateY(-8px); }
+  15%  { opacity: 1; transform: translateY(0); }
+  85%  { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(8px); }
+}
+
+/* Container card glow on hover */
+.container-card:hover {
+  box-shadow: 0 0 30px rgba(249,115,22,0.2), 0 8px 32px rgba(0,0,0,0.4);
+  border-color: rgba(249,115,22,0.3);
+}
+
+/* Hero gradient text shimmer */
+@keyframes textShimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+.hero-text-shimmer {
+  background: linear-gradient(90deg, #f97316, #fbbf24, #f97316, #fb923c);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textShimmer 4s linear infinite;
+}
+
+/* Orange glow pulse for CTA */
+@keyframes orangeGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(249,115,22,0.3), 0 4px 20px rgba(249,115,22,0.2); }
+  50%       { box-shadow: 0 0 40px rgba(249,115,22,0.6), 0 8px 40px rgba(249,115,22,0.35); }
+}
+.btn-orange-glow {
+  animation: orangeGlow 3s ease-in-out infinite;
+}

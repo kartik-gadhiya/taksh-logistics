@@ -1,0 +1,177 @@
+"use client";
+
+import React from "react";
+import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
+import { Package, Truck, Warehouse, ShieldCheck, ArrowRight } from "lucide-react";
+import Image from "next/image";
+import { TiltCard } from "@/components/ui/InteractiveEffects";
+import { SplitText } from "@/components/ui/AnimatedText";
+import { ParticleBackground } from "@/components/ui/ParticleBackground";
+
+export const Services = () => {
+  const t = useTranslations("Index.services");
+
+  const services = [
+    {
+      title: t("container"),
+      icon: Package,
+      desc: t("containerDesc"),
+      size: "col-span-1 md:col-span-2",
+      img: "/fleet_ship.png",
+      color: "red",
+      gradient: "from-red-600/20 to-rose-600/5",
+    },
+    {
+      title: t("freight"),
+      icon: Truck,
+      desc: t("freightDesc"),
+      size: "col-span-1 md:col-span-1",
+      img: "/fleet_truck.png",
+      color: "red",
+      gradient: "from-red-600/20 to-rose-600/5",
+    },
+    {
+      title: t("warehousing"),
+      icon: Warehouse,
+      desc: t("warehouseDesc"),
+      size: "col-span-1 md:col-span-1",
+      img: "/fleet_warehouse.png",
+      color: "red",
+      gradient: "from-rose-600/20 to-red-600/5",
+    },
+    {
+      title: t("fleet"),
+      icon: ShieldCheck,
+      desc: t("fleetDesc"),
+      size: "col-span-1 md:col-span-2",
+      img: "/fleet_van.png",
+      color: "red",
+      gradient: "from-red-700/20 to-rose-600/5",
+    },
+  ];
+
+  return (
+    <section className="pt-14 pb-10 bg-gray-50 dark:bg-[#050505] relative overflow-hidden transition-colors duration-500">
+      {/* Subtle particle layer */}
+      <div className="absolute inset-0 opacity-30">
+        <ParticleBackground count={20} />
+      </div>
+
+      <div className="container mx-auto px-10 md:px-20 lg:px-32 max-w-[1600px] relative z-10">
+
+        {/* Header */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10 items-end">
+          <div>
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              className="flex items-center gap-4 mb-4"
+            >
+              <motion.div
+                animate={{ scaleX: [0, 1] }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="h-[2px] w-12 bg-red-600 origin-left"
+              />
+              <span className="text-red-600 font-bold tracking-[0.3em] uppercase text-[10px]">
+                {t("mainTag")}
+              </span>
+            </motion.div>
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              className="text-4xl md:text-5xl font-bold font-outfit tracking-tighter leading-[0.9] text-gray-900 dark:text-white"
+            >
+              <SplitText text={t("mainTitle")} delay={0.1} />{" "}
+              <br />
+              <span className="text-red-600">
+                <SplitText text={t("mainSubtitle")} delay={0.3} />
+              </span>
+            </motion.h2>
+          </div>
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            className="text-gray-500 dark:text-gray-400 text-sm md:text-base font-light leading-relaxed max-w-sm lg:mb-2 border-l border-gray-200 dark:border-white/10 pl-6"
+          >
+            {t("mainDesc")}
+          </motion.p>
+        </div>
+
+        {/* Bento Grid with 3D tilt */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {services.map((service, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.12, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              className={service.size}
+            >
+              <TiltCard
+                className="h-[320px] rounded-[2.5rem] overflow-hidden border border-gray-100 dark:border-white/5 bg-white dark:bg-gray-900 shadow-sm hover:shadow-2xl transition-all duration-500 group cursor-none"
+                intensity={8}
+              >
+                {/* Gradient hover overlay */}
+                <div
+                  className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-[2.5rem]`}
+                />
+
+                {/* Background Image Preview */}
+                <div className="absolute top-0 right-0 w-1/2 h-full opacity-0 group-hover:opacity-25 transition-opacity duration-700">
+                  <Image
+                    src={service.img}
+                    alt={service.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover grayscale"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-l from-transparent via-white dark:via-gray-900 to-white dark:to-gray-900" />
+                </div>
+
+                {/* Animated corner accent */}
+                <motion.div
+                  className="absolute top-0 right-0 w-0 h-0 border-t-[80px] border-t-red-600/5 border-l-[80px] border-l-transparent group-hover:border-t-red-600/15 transition-colors duration-500 rounded-tr-[2.5rem]"
+                />
+
+                <div className="absolute inset-0 p-10 flex flex-col justify-between z-10">
+                  <div>
+                    <motion.div
+                      whileHover={{ rotate: 15, scale: 1.1 }}
+                      transition={{ type: "spring", stiffness: 300 }}
+                      className="h-12 w-12 rounded-xl bg-red-600/5 dark:bg-red-600/10 flex items-center justify-center text-red-600 mb-6 group-hover:bg-red-600 group-hover:text-white transition-all duration-500 shadow-lg group-hover:shadow-red-600/30"
+                    >
+                      <service.icon className="h-6 w-6" />
+                    </motion.div>
+                    <h3 className="text-2xl font-bold font-outfit mb-3 text-gray-900 dark:text-white tracking-tight">
+                      {service.title}
+                    </h3>
+                    <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed max-w-[200px]">
+                      {service.desc}
+                    </p>
+                  </div>
+
+                  <motion.div
+                    className="flex items-center gap-2 text-red-600 font-bold text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-500"
+                  >
+                    <span>{t("learnMore")}</span>
+                    <motion.span
+                      animate={{ x: [0, 4, 0] }}
+                      transition={{ duration: 1.5, repeat: Infinity }}
+                    >
+                      <ArrowRight className="h-4 w-4" />
+                    </motion.span>
+                  </motion.div>
+                </div>
+
+                {/* Decorative Accent Glow */}
+                <div className="absolute -bottom-10 -right-10 h-32 w-32 bg-red-600/5 blur-[50px] rounded-full group-hover:bg-red-600/20 transition-all" />
+              </TiltCard>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};

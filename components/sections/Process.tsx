@@ -1,0 +1,244 @@
+"use client";
+
+import React from "react";
+import { motion } from "framer-motion";
+import { Search, Package, Ship, MapPin, ArrowRight, Zap, TrendingUp, Shield } from "lucide-react";
+import { useTranslations } from "next-intl";
+
+export const Process = () => {
+  const t = useTranslations("Index.process");
+
+  const steps = [
+    {
+      title: t("steps.0.title"),
+      desc: t("steps.0.desc"),
+      icon: Search,
+      color: "from-red-600 to-red-400"
+    },
+    {
+      title: t("steps.1.title"),
+      desc: t("steps.1.desc"),
+      icon: Package,
+      color: "from-rose-600 to-rose-400"
+    },
+    {
+      title: t("steps.2.title"),
+      desc: t("steps.2.desc"),
+      icon: Ship,
+      color: "from-red-500 to-rose-500"
+    },
+    {
+      title: t("steps.3.title"),
+      desc: t("steps.3.desc"),
+      icon: MapPin,
+      color: "from-red-700 to-red-500"
+    },
+  ];
+
+  return (
+    <section className="pt-14 pb-10 bg-white dark:bg-[#030303] relative overflow-hidden transition-colors duration-500">
+      
+      {/* Background Decorative Elements */}
+      <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-20 dark:opacity-40">
+        <div className="absolute top-[-10%] left-[-5%] w-[500px] h-[500px] bg-red-600/10 blur-[120px] rounded-full" />
+        <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] bg-red-600/10 blur-[150px] rounded-full" />
+      </div>
+
+      <div className="container mx-auto px-10 md:px-20 lg:px-32 max-w-[1600px] relative z-10">
+        
+        {/* Editorial Header */}
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-12 gap-8">
+          <div className="max-w-3xl">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              className="flex items-center gap-3 mb-4"
+            >
+              <div className="h-[2px] w-10 bg-red-600" />
+              <span className="text-red-600 font-bold tracking-[0.4em] uppercase text-[10px]">
+                {t("subtitle")}
+              </span>
+            </motion.div>
+            
+            <h2 className="text-4xl md:text-5xl font-bold font-outfit text-gray-900 dark:text-white tracking-tighter leading-[0.9]">
+              Optimized <br /> 
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-rose-500">Workflow.</span>
+            </h2>
+          </div>
+          
+          <motion.p 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            className="text-gray-500 dark:text-gray-400 text-sm md:text-base font-light leading-relaxed max-w-md border-l-2 border-red-600/10 pl-6"
+          >
+            {t("desc")}
+          </motion.p>
+        </div>
+
+        {/* Process Flow */}
+        <div className="relative">
+          
+          {/* Animated Connector Path (SVG) */}
+          <div className="absolute top-1/2 left-0 w-full h-[2px] hidden xl:block -translate-y-1/2 opacity-20">
+            <svg width="100%" height="2" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line x1="0" y1="1" x2="100%" y2="1" stroke="currentColor" strokeWidth="2" strokeDasharray="8 8" className="text-red-600" />
+            </svg>
+            <motion.div 
+              animate={{ left: ["0%", "100%"] }}
+              transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+              className="absolute top-0 w-40 h-full bg-gradient-to-r from-transparent via-red-600 to-transparent"
+            />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
+            {steps.map((step, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                className={`relative group ${i % 2 !== 0 ? "xl:translate-y-12" : ""}`}
+              >
+                {/* Step Card */}
+                <div className="relative z-10 h-full p-10 rounded-[3rem] bg-gray-50/50 dark:bg-white/[0.02] backdrop-blur-3xl border border-gray-100 dark:border-white/10 hover:border-red-500/30 transition-all duration-500 flex flex-col items-center text-center group-hover:shadow-2xl group-hover:shadow-red-500/5">
+                  
+                  {/* Icon with Animated Background */}
+                  <div className="relative mb-10">
+                    <motion.div 
+                      whileHover={{ rotate: 90 }}
+                      className={`h-24 w-24 rounded-3xl bg-gradient-to-br ${step.color} p-[1px] shadow-2xl shadow-red-600/20`}
+                    >
+                      <div className="h-full w-full rounded-[1.4rem] bg-white dark:bg-gray-950 flex items-center justify-center text-red-600 dark:text-red-400">
+                        <step.icon className="h-10 w-10" />
+                      </div>
+                    </motion.div>
+                    
+                    {/* Floating Number */}
+                    <div className="absolute -top-4 -right-4 h-10 w-10 rounded-full bg-gray-900 dark:bg-white text-white dark:text-black font-bold font-outfit flex items-center justify-center text-sm shadow-xl border-4 border-white dark:border-gray-950">
+                      {i + 1}
+                    </div>
+                  </div>
+
+                  <h3 className="text-2xl font-bold mb-4 font-outfit tracking-tight text-gray-900 dark:text-white">
+                    {step.title}
+                  </h3>
+                  
+                  <p className="text-gray-500 dark:text-gray-400 text-sm font-light leading-relaxed mb-8">
+                    {step.desc}
+                  </p>
+
+                  <div className="mt-auto flex items-center gap-2 text-[10px] font-bold text-red-600 uppercase tracking-widest opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                    <span>Phase {i + 1} Details</span>
+                    <ArrowRight className="h-3 w-3" />
+                  </div>
+
+                  {/* Large Background Number Decor */}
+                  <div className="absolute -bottom-4 -left-4 text-9xl font-black text-gray-900/[0.02] dark:text-white/[0.02] select-none pointer-events-none">
+                    0{i + 1}
+                  </div>
+                </div>
+
+                {/* Vertical Connector for Mobile */}
+                {i < steps.length - 1 && (
+                  <div className="h-12 w-[1px] bg-red-600/20 mx-auto xl:hidden" />
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* Premium Performance Metrics Dashboard */}
+        <div className="mt-20">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="flex flex-col items-center mb-16 text-center"
+          >
+            <div className="text-[10px] font-bold text-red-600 uppercase tracking-[0.4em] mb-4">Performance Intelligence</div>
+            <h3 className="text-2xl md:text-3xl font-bold font-outfit tracking-tight text-gray-900 dark:text-white">Real-time Efficiency Metrics</h3>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              { 
+                label: "On-Time Dispatch", 
+                value: "99.8%", 
+                icon: Zap, 
+                desc: "Industry-leading accuracy across global routes.",
+                color: "text-red-600",
+                bg: "bg-red-600/10"
+              },
+              { 
+                label: "Route Efficiency", 
+                value: "94.5%", 
+                icon: TrendingUp, 
+                desc: "Proprietary AI-driven path optimization.",
+                color: "text-rose-600",
+                bg: "bg-rose-600/10"
+              },
+              { 
+                label: "Real-time Tracking", 
+                value: "100%", 
+                icon: Shield, 
+                desc: "Complete transparency for every container.",
+                color: "text-red-500",
+                bg: "bg-red-500/10"
+              },
+            ].map((metric, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ delay: i * 0.1 }}
+                className="group relative p-8 rounded-[3rem] bg-white dark:bg-white/[0.02] border border-gray-100 dark:border-white/5 hover:border-red-500/20 transition-all duration-500"
+              >
+                {/* Background Glow */}
+                <div className="absolute inset-0 bg-gradient-to-br from-red-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-[3rem]" />
+                
+                <div className="relative z-10 flex flex-col items-center text-center">
+                  <div className={`h-16 w-16 rounded-2xl ${metric.bg} flex items-center justify-center ${metric.color} mb-8 group-hover:scale-110 transition-transform duration-500`}>
+                    <metric.icon className="h-7 w-7" />
+                  </div>
+                  
+                  <div className="relative mb-2">
+                    <span className="text-5xl font-black font-outfit text-gray-900 dark:text-white tracking-tighter">
+                      {metric.value}
+                    </span>
+                    {/* Tiny status dot */}
+                    <div className="absolute -top-1 -right-4 h-2 w-2 rounded-full bg-red-600 animate-pulse" />
+                  </div>
+                  
+                  <div className="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-[0.3em] mb-4">
+                    {metric.label}
+                  </div>
+                  
+                  <p className="text-xs text-gray-500 dark:text-gray-400 font-light leading-relaxed max-w-[200px]">
+                    {metric.desc}
+                  </p>
+                </div>
+
+                {/* Decorative Progress Arc (SVG) */}
+                <div className="absolute top-6 right-6 opacity-10 group-hover:opacity-20 transition-opacity">
+                  <svg width="40" height="40" viewBox="0 0 40 40" className="rotate-[-90deg]">
+                    <circle cx="20" cy="20" r="18" stroke="currentColor" strokeWidth="2" fill="none" className="text-gray-200 dark:text-white/10" />
+                    <motion.circle 
+                      cx="20" cy="20" r="18" 
+                      stroke="currentColor" strokeWidth="2" fill="none" 
+                      strokeDasharray="113"
+                      initial={{ strokeDashoffset: 113 }}
+                      whileInView={{ strokeDashoffset: 113 - (113 * parseFloat(metric.value) / 100) }}
+                      className={metric.color}
+                    />
+                  </svg>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+      </div>
+    </section>
+  );
+};
+
