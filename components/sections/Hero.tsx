@@ -46,7 +46,7 @@ export const Hero = () => {
               animate={{ opacity: [0.5, 1, 0.5] }}
               transition={{ duration: 1.5, repeat: Infinity }}
             />
-            En Dessus Transport Services (EDTS)
+            En Dessus Transport Services (EDTS) kartik test
           </motion.div>
 
           {/* Headline */}
